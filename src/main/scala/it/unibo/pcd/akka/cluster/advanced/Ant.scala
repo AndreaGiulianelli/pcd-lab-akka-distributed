@@ -13,7 +13,7 @@ import scala.util.Random
   * frontend interested in ant movements.
   */
 object Ant:
-
+  // sealed: le specializzazioni dell'interfaccia sono all'interno dello stesso file, non posso instanziarla fuori -> importante per l'incapsulamento
   sealed trait Command extends Message // Enum needs an ad-hoc serializers...
   case object Stop extends Command
   private case object Move extends Command // and ADT enable also private messages
