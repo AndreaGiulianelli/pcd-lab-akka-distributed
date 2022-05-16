@@ -25,7 +25,7 @@ object AntsRender:
       Behaviors.withTimers { timers =>
         timers.startTimerAtFixedRate(Flush, 33 milliseconds)
         var toRender: Map[ActorRef[_], (Int, Int)] = Map.empty
-        ctx.system.receptionist ! Receptionist.Register(Service, ctx.self)
+        ctx.system.receptionist ! Receptionist.Register(Service, ctx.self) // d'ora in poi gli altri attori possono trovarmi come servizio.
         Behaviors.receiveMessage {
           case Render(x, y, id) =>
             ctx.log.info(s"render.. $id")

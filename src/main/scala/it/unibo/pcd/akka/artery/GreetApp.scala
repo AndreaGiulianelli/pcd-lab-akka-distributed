@@ -18,7 +18,7 @@ import scala.language.postfixOps
 
 // NB! Do not use akka artery, it is a low level library (indeed it does not support typed)
 object GreetApp:
-  case class Greet(whom: String, replyTo: ActorRef[Greeted]) extends Message // Required for serialization
+  case class Greet(whom: String, replyTo: ActorRef[Greeted]) extends Message // extends Required for serialization. Si può fare un trait vuoto da cui si estende.
   case class Greeted(whom: String, sender: ActorRef[Greet]) extends Message
 
   def greet(me: String): Behavior[Greet] = Behaviors.receive { case (ctx, Greet(whom, replyTo)) =>
@@ -48,7 +48,7 @@ def configFrom(port: Int): Config = ConfigFactory
   val remoteReferencePath = "akka://foo@127.0.0.1:8080/user/"
   val config = configFrom(port)
   val system = ClassicActorSystem.apply("foo", config)
-  val remoteReference = system.actorSelection(remoteReferencePath).resolveOne()
+  val remoteReference = system.actorSelection(remoteReferencePath).resolveOne() // mi permette di, dato l'url di un attore, ottenerne un riferimento, restituisce una Future la quale viene risolta con la for comprehension.
   for remote <- remoteReference do
-    val actor = system.spawn(greeted(), who)
-    remote ! GreetApp.Greet(who, actor)
+    val actor = system.spawn(greeted(), who) // Creo il mio attore
+    remote ! GreetApp.Greet(who, actor) // Mando il saluto all'attore remoto
