@@ -18,7 +18,7 @@ object AntsRender:
   sealed trait Command
   final case class Render(x: Int, y: Int, id: ActorRef[_]) extends Message with Command
   private case object Flush extends Command // Private message (similar to private method in OOP)
-  val Service = ServiceKey[Render]("RenderService")
+  val Service = ServiceKey[Render]("RenderService") // Generica in un tipo che è il tipo di messaggio che può gestire l'attore che voglio registrare.
   def apply(): Behavior[Command] = {
     Behaviors.setup { ctx =>
       val frontendGui = SimpleGUI(width, height) // init the gui

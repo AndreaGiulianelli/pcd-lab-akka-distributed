@@ -16,7 +16,7 @@ import it.unibo.pcd.akka.cluster.*
   val clusterRefB = Cluster(second)
   clusterRefA.manager ! Join(clusterRefA.selfMember.address)
   Thread.sleep(5000)
-  clusterRefB.manager ! Join(clusterRefA.selfMember.address) // same cluster!!
+  clusterRefB.manager ! Join(clusterRefA.selfMember.address)
   Thread.sleep(5000)
   clusterRefA.manager ! Leave(clusterRefB.selfMember.address)
   Thread.sleep(5000)

@@ -15,8 +15,8 @@ object ShowEvents:
     classOf[MemberEvent] :: classOf[LeaderChanged] :: Nil foreach (event => // I can Subscribe to multiple events
       cluster.subscriptions ! Subscribe(ctx.self, event) // subscriptions mi da la possibilità di registrarmi agli eventi del cluster
     )
-    Behaviors.receiveMessage { msg =>
-      ctx.log.info(s"EVENT LISTENER: ${msg.toString}")
+    Behaviors.receiveMessage { msg => // Così mi accorgo se magari succede qualcosa a livelli di nodi.
+      ctx.log.info(s"EVENT LISTENER: ${msg.toString}") // Member Joined è quando un nodo entra e avvia il gossip, Member Up è quando il protocollo di gossip ha fatto si che tutti i nodi presenti sapessero dell'entrata e quindi finalmente il nodo può essere fatto partire dal leader.
       Behaviors.same
     }
   }

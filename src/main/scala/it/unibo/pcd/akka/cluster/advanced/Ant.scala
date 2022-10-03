@@ -39,7 +39,7 @@ object Ant:
   )(using random: Random): Behavior[Command | Receptionist.Listing] = Behaviors.receiveMessage {
     case msg: Receptionist.Listing =>
       ctx.log.info(s"New frontend! $msg")
-      val services = msg.serviceInstances(AntsRender.Service).toList
+      val services = msg.serviceInstances(AntsRender.Service).toList // Contiene tutti i riferimenti di quelli registrati a quel servizio.
       if (services == frontends)
         Behaviors.same
       else
